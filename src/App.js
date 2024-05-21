@@ -1,25 +1,26 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import ProductsList from './components/ProductList';
 
-function App() {
+const App = () => {
+  const [page, setPage] = useState(1);
+  const { loading, error, hasMore, products } = ProductsList(page);
+  
+  // Debug logs
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div>Test Message: Component Loaded</div> {/* Add this line for initial render check */}
+      
+      {products.map(product => {
+        return <div key={product.shopify_id} className="container">
+          <h1>{product.name}</h1>
+        </div>
+      })}
+      <div>{loading && 'Loading...'}</div>
+      <div>{error && 'Error...'}</div>
+    </>
   );
-}
+};
 
 export default App;
